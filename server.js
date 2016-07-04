@@ -4,94 +4,82 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var path = require("path");
 var methodOverride = require('method-override');
 var MongoClient = require('mongodb').MongoClient;
-// configuration ===========================================
+var ObjectId = require('mongodb').ObjectID;
+var router = express.Router();
+var passport = require('passport');
+var passport - local = require('passport-local');
+var cookie - parser = require('cookie-parser');
+var express - session = require('express-session');
 
-// config files
+
+//DB Connection
 var db = "mongodb://cclawson:Nu130441882@ds061954.mlab.com:61954/dbproject3d"
 
 // set our port
 var port = process.env.PORT || 8080;
 
-// connect to our mongoDB database 
-// (uncomment after you enter in your own credentials in config/db.js)
-// mongoose.connect(db.url); 
+//Test Data
 var seedData = [
     {
-        decade: '1970s',
-        artist: 'Debby Boone',
-        song: 'You Light Up My Life',
-        weeksAtOne: 10
-  },
+        Title: 'Model 1',
+        arthur: 'Cody Clawson',
+        tags: [],
+        url: '/Models/Model1.json'
+    },
     {
-        decade: '1980s',
-        artist: 'Olivia Newton-John',
-        song: 'Physical',
-        weeksAtOne: 10
-  },
+        Title: 'Model 2',
+        arthur: 'Walter W.',
+        tags: [],
+        url: '/Models/Model2.json'
+    },
     {
-        decade: '1990s',
-        artist: 'Mariah Carey',
-        song: 'One Sweet Day',
-        weeksAtOne: 16
-  }
+        Title: 'Rubiks Cube',
+        arthur: 'Bob The Artist',
+        tags: [],
+        url: '/Models/Model3.json'
+    },
+    {
+        Title: 'Cool Model',
+        arthur: 'Joe Cool',
+        tags: [],
+        url: '/Models/Model2.json'
+    },
+    {
+        Title: 'Blank Model',
+        arthur: 'Tim Test',
+        tags: [],
+        url: '/Models/Model2.json'
+    }
 ];
 
 //Data Test for mongo connection
-MongoClient.connect(db, function (err, db) {
-    if (err) throw err;
-    var songs = db.collection('songs');
-    songs.insert(seedData, function (err, result) {
-        if (err) throw err;
-        songs.update({
-                song: 'One Sweet Day'
-            }, {
-                $set: {
-                    artist: 'Mariah Carey ft. Boyz II Men'
-                }
-            },
-            function (err, result) {
-
-                if (err) throw err;
-
-                /*
-                 * Finally we run a query which returns all the hits that spend 10 or
-                 * more weeks at number 1.
-                 */
-
-                songs.find({
-                    weeksAtOne: {
-                        $gte: 10
-                    }
-                }).sort({
-                    decade: 1
-                }).toArray(function (err, docs) {
-
-                    if (err) throw err;
-
-                    docs.forEach(function (doc) {
-                        console.log(
-                            'In the ' + doc['decade'] + ', ' + doc['song'] + ' by ' + doc['artist'] +
-                            ' topped the charts for ' + doc['weeksAtOne'] + ' straight weeks.'
-                        );
-                    });
-
-                    // Since this is an example, we'll clean up after ourselves.
-                    songs.drop(function (err) {
-                        if (err) throw err;
-
-                        // Only close the connection when your app is terminating.
-                        db.close(function (err) {
-                            if (err) throw err;
-                        });
-                    });
-                });
-            }
-        );
-    });
-
-});
+//MongoClient.connect(db, function (err, db) {
+//    if (err) throw err;
+//    var models = db.collection('models');
+//    models.insert(seedData, function (err, result) {
+//        if (err) throw err;
+//
+//        models.find({
+//            arthur: "Cody Clawson"
+//        }).toArray(function (err, docs) {
+//
+//            if (err) throw err;
+//
+//            docs.forEach(function (doc) {
+//                console.log(
+//                    doc['Title'] + ' is by ' + doc['arthur'] + ' and is located at ' + doc['url'] + '.'
+//                );
+//            });
+//            db.close(function (err) {
+//                if (err) throw err;
+//            });
+//        });
+//    });
+//
+//});
 
 // get all data/stuff of the body (POST) parameters
 // parse application/json 
@@ -112,15 +100,105 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 
 // set the static files location /public/img will be /img for users
 app.use(express.static(__dirname + '/public'));
+app.use("/js", express.static(__dirname + '/public/js'));
+app.use("/Models", express.static(__dirname + '/Models'));
+
+router.use(function (req, res, next) {
+    // do logging
+    next(); // make sure we go to the next routes and don't stop here
+});
 
 // routes ==================================================
-//require('./app/routes')(app); // configure our routes
-// start app ===============================================
+
+app.get('/Model/Details/:modelId', function (req, res) {
+    res.cookie('modelNumber', req.params.modelId, {
+        expires: new Date(Date.now() + 3600000 * 24 * 15),
+        maxAge: 3600000 * 24 * 15
+    });
+
+    res.sendFile(path.join(__dirname + '/public/Pages/ModelDetails.html'));
+});
+
+app.get('/Login', function (req, res) {
+    res.sendFile(path.join(__dirname + '/public/Pages/Login.html'));
+});
+
+// api ==================================================
+
+router.route('/model_list').get(function (req, res) {
+    var model_list;
+    MongoClient.connect(db, function (err, db) {
+        if (err) throw err;
+        var models = db.collection('models');
+        models.find().toArray(function (err, docs) {
+            if (err) throw err;
+            model_list = docs;
+            db.close(function (err) {
+                if (err) throw err;
+            });
+            res.json(model_list);
+        });
+    });
+});
+
+router.route('/:model_Id').get(function (req, res) {
+    MongoClient.connect(db, function (err, db) {
+        if (err) throw err;
+        var models = db.collection('models');
+        models.findOne({
+            _id: ObjectId(req.params.model_Id)
+        }).then(function (model) {
+            res.send(model);
+        })
+    });
+});
+
+router.route('/url/:model_Id').get(function (req, res) {
+    MongoClient.connect(db, function (err, db) {
+        if (err) throw err;
+        var models = db.collection('models');
+        models.findOne({
+            _id: ObjectId(req.params.model_Id)
+        }).then(function (model) {
+            res.send(model.url);
+        })
+    });
+});
+
+router.route('/:model_Id').put(function (req, res) {
+    var tag = req.query.tag;
+    MongoClient.connect(db, function (err, db) {
+        if (err) throw err;
+        var models = db.collection('models');
+        models.update({
+            _id: ObjectId(req.params.model_Id)
+        }, {
+            $push: {
+                tags: tag
+            }
+        }).then(
+            models.findOne({
+                _id: ObjectId(req.params.model_Id)
+            }).then(function (model) {
+                res.send(model);
+            })
+        )
+    });
+})
+
+//Passport Setup
+
+
+
+
+//Tell app to use api routes
+app.use('/api', router);
+
 // startup our app at http://localhost:8080
 app.listen(port);
 
 // shoutout to the user                     
-console.log('Magic happens on port ' + port);
+console.log('Server Started on port ' + port);
 
 // expose app           
 exports = module.exports = app;

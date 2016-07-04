@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Project 3-D Model</title>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="/js/controllers/ModelDetailsCtrl.js"></script>
+    <script src="/js/Apps/modelDetailsApp.js"></script>
+</head>
+
+<body ng-app="modelDetailsApp" ng-controller="modelDetailsController">
+    <p>{{ message }}</p>
+    <div id="container"></div>
+    <div>
+        <h2>{{model.Title}}</h2>
+        <p>Author: {{model.arthur}}</p>
+        <p>Tags: {{model.tags}}</p>
+        <input type="text" ng-model="Tag" />
+        <button ng-click="sendTag()">Add Tag</button>
+    </div>
+
+    <!--SCRIPTS-->
+    <script src="/js/Libraries/three.min.js"></script>
+    <script src="/js/Libraries/OrbitControls.js"></script>
+    <script src=/js/cube.js></script>
+</body>
+
+</html>
