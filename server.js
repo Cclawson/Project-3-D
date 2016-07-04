@@ -10,9 +10,9 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var router = express.Router();
 var passport = require('passport');
-var passport - local = require('passport-local');
-var cookie - parser = require('cookie-parser');
-var express - session = require('express-session');
+var passport_local = require('passport-local');
+var cookie_parser = require('cookie-parser');
+var express_session = require('express-session');
 
 
 //DB Connection
