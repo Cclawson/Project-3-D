@@ -5,7 +5,7 @@ angular.module('ModelDetailsCtrl', [])
     $scope.model = "";
     $scope.message = 'Welcome To Model Details Page';
 
-    $http.get("/api/" + $cookies.modelNumber)
+    $http.get("/api/model/" + $cookies.modelNumber)
         .then(function (response) {
             $scope.model = response.data;
             $scope.Tag = "";

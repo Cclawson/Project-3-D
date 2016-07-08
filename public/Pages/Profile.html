@@ -12,7 +12,46 @@
 </head>
 
 <body ng-app="profileApp" ng-controller="ProfileController">
+    <div class="page-header text-center">
+        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+
     <p>{{ message }}</p>
+    <p>{{user.data.local.email}}</p>
+    <p>{{user.data.local.password}}</p>
+
+    <div class="col-sm-6">
+        <div class="well">
+            <h3 class="text-primary"><span class="fa fa-facebook"></span> Facebook</h3>
+
+            <p>
+                <strong>id</strong>: {{ user.data.facebook.id }}
+                <br>
+                <strong>token</strong>: {{ user.data.facebook.token}}
+                <br>
+                <strong>name</strong>: {{ user.data.facebook.name }}
+            </p>
+
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="well">
+            <h3 class="text-danger"><span class="fa fa-google-plus"></span> Google</h3>
+            <strong>id</strong>: {{ user.data.google.id }}
+            <br>
+            <strong>token</strong>: {{user.data.google.token}}
+            <br>
+            <strong>email</strong>: {{user.data.google.email}}
+            <br>
+            <strong>name</strong>: {{user.data.google.name}}
+
+        </div>
+    </div>
+
+
 </body>
 
 </html>

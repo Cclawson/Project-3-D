@@ -3,24 +3,13 @@ angular.module('ProfileCtrl', [])
 .controller('ProfileController', ['$scope', '$http', '$cookies', function ($scope, $http, $cookies) {
 
     $scope.message = 'Welcome To The Profile Page';
+    $scope.user;
 
-    $http.get("/api/" + $cookies.modelNumber)
+    $http.get("/api/user")
         .then(function (response) {
-            $scope.model = response.data;
-            $scope.Tag = "";
-
-            $scope.sendTag = function () {
-                var data = $.param({
-                    tag: $scope.Tag
-                });
-                if ($scope.Tag != "") {
-                    $http.put('/api/' + $cookies.modelNumber + '?' + data)
-                        .success(function (data, status, headers) {
-                            $scope.Tag = "";
-                            $scope.model = data;
-                        })
-                }
-            }
+            console.log(response);
+            $scope.user = response;
         });
+
 
 }]);

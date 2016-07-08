@@ -34,7 +34,7 @@ module.exports = function (app, passport, router) {
 
     app.post('/register', passport.authenticate('local-signup', {
         successRedirect: '/profile', // redirect to the secure profile section
-        failureRedirect: '/signup', // redirect back to the signup page if there is an error
+        failureRedirect: '/register', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
 
@@ -49,6 +49,46 @@ module.exports = function (app, passport, router) {
         failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
+
+    // =====================================
+    // FACEBOOK ROUTES =====================
+    // =====================================
+    // route for facebook authentication and login
+
+    app.get('/auth/facebook', passport.authenticate('facebook', {
+        scope: 'email'
+    }));
+
+    // handle the callback after facebook has authenticated the user
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect: '/profile',
+            failureRedirect: '/'
+        }));
+
+    // route for logging out
+    app.get('/logout', function (req, res) {
+        req.logout();
+        res.redirect('/');
+    });
+
+    // =====================================
+    // GOOGLE ROUTES =======================
+    // =====================================
+    // send to google to do the authentication
+    // profile gets us their basic information including their name
+    // email gets their emails
+    app.get('/auth/google', passport.authenticate('google', {
+        scope: ['profile', 'email']
+    }));
+
+    // the callback after google has authenticated the user
+    app.get('/auth/google/callback',
+        passport.authenticate('google', {
+            successRedirect: '/profile',
+            failureRedirect: '/'
+        }));
+
 
     // api ==================================================
 
@@ -63,7 +103,7 @@ module.exports = function (app, passport, router) {
         }));
     });
 
-    router.route('/:model_Id').get(function (req, res) {
+    router.route('/model/:model_Id').get(function (req, res) {
 
         Model.findOne({
             '_id': ObjectId(req.params.model_Id)
@@ -100,6 +140,14 @@ module.exports = function (app, passport, router) {
         })
 
     });
+
+    router.route('/user').get(function (req, res) {
+        if (isLoggedIn) {
+            var user = req.user;
+            console.log(user);
+            res.send(user);
+        }
+    })
 
     app.use('/api', router);
 };
