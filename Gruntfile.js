@@ -40,7 +40,7 @@ module.exports = function (grunt) {
         },
         mocha: {
             all: {
-                src: ['tests/testrunner.html'],
+                src: ['test/testrunner.html'],
             },
             options: {
                 run: true

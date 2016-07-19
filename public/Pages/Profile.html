@@ -12,15 +12,26 @@
 </head>
 
 <body ng-app="profileApp" ng-controller="ProfileController">
+
     <div class="page-header text-center">
         <h1><span class="fa fa-anchor"></span> Profile Page</h1>
         <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     </div>
 
+    <div class="row">
 
-    <p>{{ message }}</p>
-    <p>{{user.data.local.email}}</p>
-    <p>{{user.data.local.password}}</p>
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6">
+            <div class="well">
+                <h3><span class="fa fa-user"></span> Local</h3>
+                <p>email: {{user.data.local.email}}</p>
+                <p>pass: {{user.data.local.password}}</p>
+                <a ng-if="user.data.local.email" href="/unlink/local" class="btn btn-default">Unlink</a>
+                <a ng-if="!user.data.local.email" href="/connect/local" class="btn btn-default">Connect Local</a>
+
+            </div>
+        </div>
+    </div>
 
     <div class="col-sm-6">
         <div class="well">
@@ -33,6 +44,9 @@
                 <br>
                 <strong>name</strong>: {{ user.data.facebook.name }}
             </p>
+            <a ng-if="user.data.facebook.token" href="/unlink/facebook" class="btn btn-primary">Unlink</a>
+            <a ng-if="!user.data.facebook.token" href="/connect/facebook" class="btn btn-primary">Connect Facebook</a>
+
 
         </div>
     </div>
@@ -47,6 +61,8 @@
             <strong>email</strong>: {{user.data.google.email}}
             <br>
             <strong>name</strong>: {{user.data.google.name}}
+            <a ng-if="user.data.google.token" href="/unlink/google" class="btn btn-danger">Unlink</a>
+            <a ng-if="!user.data.google.token" href="/connect/google" class="btn btn-danger">Connect Google</a>
 
         </div>
     </div>

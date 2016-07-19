@@ -2,6 +2,14 @@ module.exports = function (app, passport, router) {
     var path = require("path");
     var Model = require('./Objects/model');
     var ObjectId = require('mongodb').ObjectID;
+    var ipn = require('paypal-ipn');
+    var bodyParser = require('body-parser');
+    var urlencodedParser = bodyParser.urlencoded({
+        extended: false
+    })
+
+
+
     //Model Details
 
 
@@ -31,6 +39,42 @@ module.exports = function (app, passport, router) {
         res.sendFile(path.join(__dirname + '/public/Pages/Profile.html'));
     })
 
+    app.get("/profile/mymodels", isLoggedIn, function (req, res) {
+        res.status(200).end();
+    });
+
+
+    app.get("/paypal", isLoggedIn, function (req, res) {
+        res.end();
+    })
+
+    app.post("/paypal", urlencodedParser, function (req, res) {
+        var params = req.body;
+        console.log(params);
+        //        ipn.verify(params, function callback(err, msg) {
+        //        if (err) {
+        //            console.log(err);
+        //            res.redirect("/");
+        //            return false
+        //        }
+
+        if (params.payment_status == 'Completed') {
+            console.log(params.item_id);
+            console.log(params.item_Name);
+            console.log(req.user);
+
+            if (req.user != undefined) {
+                req.user.models.push({
+                    Name: params.item_Name,
+                    ID: params.item_id
+                })
+            }
+            res.redirect("/profile")
+        }
+        res.status(200).end();
+        //        });
+        res.status(200);
+    });
 
     app.post('/register', passport.authenticate('local-signup', {
         successRedirect: '/profile', // redirect to the secure profile section
@@ -117,7 +161,6 @@ module.exports = function (app, passport, router) {
         Model.findOne({
             '_id': ObjectId(req.params.model_Id)
         }, function (err, model) {
-            console.log(model);
             res.send(model.url);
         })
     });
@@ -144,10 +187,77 @@ module.exports = function (app, passport, router) {
     router.route('/user').get(function (req, res) {
         if (isLoggedIn) {
             var user = req.user;
-            console.log(user);
             res.send(user);
         }
     })
+
+    //is LoggedIn Linking//
+    // locally --------------------------------
+    app.get('/connect/local', function (req, res) {
+        res.sendFile(path.join(__dirname + '/public/Pages/Connect-Local.html'));
+    });
+    app.post('/connect/local', passport.authenticate('local-signup', {
+        successRedirect: '/profile',
+        failureRedirect: '/connect/local',
+        failureFlash: true
+    }));
+
+    // facebook -------------------------------
+
+    // send to facebook to do the authentication
+    app.get('/connect/facebook', passport.authorize('facebook', {
+        scope: 'email'
+    }));
+
+    // handle the callback after facebook has authorized the user
+    app.get('/connect/facebook/callback',
+        passport.authorize('facebook', {
+            successRedirect: '/profile',
+            failureRedirect: '/'
+        }));
+
+
+    // send to google to do the authentication
+    app.get('/connect/google', passport.authorize('google', {
+        scope: ['profile', 'email']
+    }));
+
+    // the callback after google has authorized the user
+    app.get('/connect/google/callback',
+        passport.authorize('google', {
+            successRedirect: '/profile',
+            failureRedirect: '/'
+        }));
+
+
+
+    // local -----------------------------------
+    app.get('/unlink/local', function (req, res) {
+        var user = req.user;
+        user.local.email = undefined;
+        user.local.password = undefined;
+        user.save(function (err) {
+            res.redirect('/profile');
+        });
+    });
+
+    // facebook -------------------------------
+    app.get('/unlink/facebook', function (req, res) {
+        var user = req.user;
+        user.facebook.token = undefined;
+        user.save(function (err) {
+            res.redirect('/profile');
+        });
+    });
+
+    // google ---------------------------------
+    app.get('/unlink/google', function (req, res) {
+        var user = req.user;
+        user.google.token = undefined;
+        user.save(function (err) {
+            res.redirect('/profile');
+        });
+    });
 
     app.use('/api', router);
 };

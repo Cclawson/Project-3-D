@@ -25,6 +25,9 @@ app.use(bodyParser.json({
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express_session({
     secret: 'projectthreed'

@@ -7,6 +7,7 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.4.2",
+    "connect": "^3.4.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "express": "~4.8.0",
@@ -16,7 +17,8 @@
     "mongodb": "^2.1.18",
     "mongoose": "~3.8.0",
     "passport-facebook": "^2.1.1",
-    "passport-google-oauth": "^1.0.0"
+    "passport-google-oauth": "^1.0.0",
+    "paypal-ipn": "^3.0.0"
   },
   "devDependencies": {
     "angular-cookies": "^1.5.7",
