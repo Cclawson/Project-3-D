@@ -19,8 +19,8 @@
     </div>
 
     <div>Welcome to your models site</div>
-    <div ng-repeat="model in user.models">
-        {{model.Name}} {{model.Id}}
+    <div ng-repeat="model in user.data.models">
+        <a ng-click="getModel(model._id)">Download</a>
     </div>
 
 

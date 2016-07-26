@@ -8,11 +8,7 @@ module.exports = function (app, passport, router) {
         extended: false
     })
 
-
-
     //Model Details
-
-
     app.get('/Model/Details/:modelId', function (req, res) {
         res.cookie('modelNumber', req.params.modelId, {
             expires: new Date(Date.now() + 3600000 * 24 * 15),
@@ -37,10 +33,14 @@ module.exports = function (app, passport, router) {
 
     app.get("/profile", isLoggedIn, function (req, res) {
         res.sendFile(path.join(__dirname + '/public/Pages/Profile.html'));
+        req.session.userId = Math.random(0, 100000);
     })
 
     app.get("/profile/mymodels", isLoggedIn, function (req, res) {
-        res.status(200).end();
+        if (!req.session.dwnld && req.session.userId) {
+            req.session.dwnld = req.session.userId;
+        }
+        res.sendFile(path.join(__dirname + '/public/Pages/myModels.html'));
     });
 
 
@@ -163,6 +163,19 @@ module.exports = function (app, passport, router) {
         }, function (err, model) {
             res.send(model.url);
         })
+    });
+
+    router.route('/download/:model_Id').get(function (req, res) {
+
+        if (req.session.dwnld) {
+            Model.findOne({
+                '_id': ObjectId(req.params.model_Id)
+            }, function (err, model) {
+                res.download(__dirname + model.url, model.Title + ".json");
+            })
+        } else {
+            res.redirect("/");
+        }
     });
 
     router.route('/:model_Id').put(function (req, res) {

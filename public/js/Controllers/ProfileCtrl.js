@@ -12,4 +12,10 @@ angular.module('ProfileCtrl', [])
         });
 
 
+    $scope.getModel = function (id) {
+        window.open("/api/download/" + id)
+        $http.get("/api/download/" + id).then(function (response) {
+            console.log(response);      
+        })
+    }
 }]);
