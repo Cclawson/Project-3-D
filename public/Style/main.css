@@ -1,0 +1,262 @@
+@font-face {
+    font-family: pagefont;
+    src: url(/fonts/bariol_regular-webfont.woff);
+}
+
+html {
+    background: #5EC2A6 no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    background: none;
+    font-family: pagefont, sans-serif
+}
+
+
+/*3D495F- dark color*/
+
+.sitelogo {
+    width: 150px;
+    height: 150px;
+    border-radius: 100px;
+    background-color: white;
+    margin: 20px;
+}
+
+.search {
+    z-index: 1000;
+    width: 500px;
+    height: 40px;
+    margin: 150px auto;
+    background: #444;
+    background: rgba(0, 0, 0, .2);
+    border-radius: 3px;
+    border: 1px solid #fff;
+    position: relative;
+}
+
+.search input {
+    width: 370px;
+    padding: 10px 5px;
+    float: left;
+    color: #ccc;
+    border: 0;
+    background: transparent;
+    border-radius: 3px 0 0 3px;
+}
+
+.search input:focus {
+    outline: 0;
+    background: transparent;
+}
+
+.search button {
+    position: relative;
+    float: right;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    height: 40px;
+    width: 120px;
+    color: #fff;
+    background: transparent;
+    border-left: 1px solid #fff;
+    border-radius: 0 3px 3px 0;
+}
+
+.search button:hover {
+    background: #fff;
+    color: #444;
+}
+
+.search button:active {
+    box-shadow: 0px 0px 12px 0px rgba(225, 225, 225, 1);
+}
+
+.search button:focus {
+    outline: 0;
+}
+
+.svgbox {
+    z-index: 0;
+    width: 500px;
+    height: 700px;
+    position: absolute;
+    right: 15px;
+    top: 50px;
+}
+
+#modelcontainer {
+    position: absolute;
+    height: 600px;
+    width: 600px;
+    right: 20px;
+    top: 50px;
+    margin: 20px;
+    z-index: 100;
+    border-radius: 100px;
+    overflow: hidden;
+    border: 5px solid #3D495F;
+}
+
+#detailsbox {
+    width: auto;
+    height: 400px;
+    background-color: white;
+    margin: 40px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#paypalbtn {
+    position: absolute;
+    margin: auto;
+    bottom: 40px;
+    right: 70px;
+}
+
+ol,
+ul {
+    list-style: outside none none;
+}
+
+#container {
+    margin: 0 auto;
+    width: 60rem;
+}
+
+.tags {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #ccc;
+    display: table;
+    padding: 0.5em;
+    width: 300px;
+}
+
+.tags li.tagAdd,
+.tags li.addedTag {
+    float: left;
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+}
+
+.tags li.addedTag {
+    background: none repeat scroll 0 0 #019f86;
+    border-radius: 2px;
+    color: #fff;
+    padding: 0.25em;
+}
+
+.tags input,
+li.addedTag {
+    border: 1px solid transparent;
+    border-radius: 2px;
+    box-shadow: none;
+    display: block;
+    padding: 0.5em;
+}
+
+.tags input:hover {
+    border: 1px solid #000;
+}
+
+span.tagRemove {
+    cursor: pointer;
+    display: inline-block;
+    padding-left: 0.5em;
+}
+
+span.tagRemove:hover {
+    color: #222222;
+}
+
+P,
+H1 {
+    text-align: center;
+}
+
+p {
+    color: #ccc;
+}
+
+h1 {
+    color: #6b6b6b;
+    font-size: 1.5em;
+}
+
+nav {
+    text-align: center;
+    font-size: 1.25em;
+    letter-spacing: .1em;
+    margin: 4em;
+    margin-left: 4em;
+    width: 600px;
+    z-index: 1000;
+    position: relative;
+}
+
+nav ul {
+    border-radius: .25em;
+    background: white;
+    list-style: none;
+    text-align: left;
+}
+
+nav li {
+    position: relative;
+    display: inline-block;
+    border-bottom: none;
+    border-radius: .25em .25em 0 0;
+}
+
+nav li:hover {
+    box-shadow: 0 -5px 0 #3D495F;
+}
+
+nav a {
+    color: #3D495F;
+    display: block;
+    padding: .5em;
+    text-decoration: none;
+}
+
+nav a:hover {
+    border-radius: 0 0 .25em .25em;
+    background: #3D495F;
+    box-shadow: 0 5px 0 #3D495F;
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+
+/*Highlight Home button
+-----------------------------------------------*/
+
+.home {
+    box-shadow: 0 -5px 0 #3D495F;
+}
+
+.home a {
+    background: #3D495F;
+    box-shadow: 0 5px 0 #3D495F;
+    color: white;
+    border-radius: 0 0 .25em .25em;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+#accountset {
+    text-align: left;
+    margin: 20px;
+}
+
+#resultsbox a {
+    color: black;
+}
+
+#resultsbox p {
+    color: black;
+}

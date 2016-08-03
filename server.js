@@ -37,6 +37,8 @@ app.use(passport.session());
 app.use(flash());
 app.use(express.static(__dirname + '/public'));
 app.use("/js", express.static(__dirname + '/public/js'));
+app.use("/style", express.static(__dirname + '/public/Style'));
+app.use("/fonts", express.static(__dirname + '/public/fonts'));
 app.use("/Models", express.static(__dirname + '/Models'));
 
 //Passport Setup

@@ -9,12 +9,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
-    <!--
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="/js/controllers/ModelDetailsCtrl.js"></script>
-    <script src="/js/Apps/modelDetailsApp.js"></script>
--->
+    <link rel="stylesheet" href="/style/main.css">
+
 </head>
 
 <body>
@@ -36,11 +32,15 @@
 
                 <button type="submit" class="btn btn-warning btn-lg">Login</button>
             </form>
-
+            <br/>
+            <div>
+                <h3>Or Sign in with your social account</h3>
+                <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
+                <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google+</a>
+            </div>
             <hr>
-
             <p>Need an account? <a href="/register">Register</a></p>
-            <p>Or go <a href="/">home</a>.</p>
+            <p><a href="/">home</a>.</p>
 
         </div>
 

@@ -4,6 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Project 3-D Model</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -12,23 +19,55 @@
 </head>
 
 <body ng-app="modelDetailsApp" ng-controller="modelDetailsController">
-    <p>{{ message }}</p>
-    <div id="container"></div>
-    <div>
-        <h2>{{model.Title}}</h2>
-        <p>Author: {{model.arthur}}</p>
-        <p>Tags: {{model.tags}}</p>
-        <input type="text" ng-model="Tag" />
-        <button ng-click="sendTag()">Add Tag</button>
+    <div class="mainbg">
+        <div class="row">
+            <div class="col-md-5">
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loginModal">Login/Register</button>
+                <div id="loginModal" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-content">
+                        <div class="jumbotron text-center">
+                            <h1><span class="fa fa-lock"></span> Node Authentication</h1>
+
+                            <p>Login or Register with:</p>
+
+                            <a href="/login" class="btn btn-default"><span class="fa fa-user"></span> Login</a>
+                            <a href="/register" class="btn btn-default"><span class="fa fa-user"></span> Register</a>
+                            <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
+                            <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google+</a>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="sitelogo">
+                </div>
+                <div id="detailsbox" class="container">
+                    <h2 class="text-center">{{model.Title}}</h2>
+                    <hr>
+                    <h3>Author: {{model.arthur}}</h3>
+                    <h3>Tags:</h3>
+                    <div id="container">
+                        <ul class="tags" ng-repeat="tag in model.tags">
+                            <li class="addedTag">{{tag}}
+                            </li>
+                        </ul>
+                    </div>
+                    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top" id="paypalbtn">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="JSRHTKDFARLRE">
+                        <input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <input type="hidden" name="item_number" value={{model._id}}>
+                        <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div id="modelcontainer"></div>
+            </div>
+
+        </div>
     </div>
 
-    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
-        <input type="hidden" name="cmd" value="_s-xclick">
-        <input type="hidden" name="hosted_button_id" value="JSRHTKDFARLRE">
-        <input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-        <input type="hidden" name="item_number" value={{model._id}}>
-        <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-    </form>
 
 
     <!--SCRIPTS-->

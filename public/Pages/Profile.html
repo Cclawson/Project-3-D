@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Project 3-D Profile</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="Style/main.css">
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -12,60 +16,62 @@
 </head>
 
 <body ng-app="profileApp" ng-controller="ProfileController">
+    <div class="row">
+        <div class="col-xs-1">
+            <div class="sitelogo">
+            </div>
+        </div>
+        <div class="col-xs-7">
+            <nav>
+                <ul>
+                    <li class="home"><a href="/"><i class="fa fa-home"></i></a></li>
+                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/profile">Profile</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="page-header text-center">
+        <h1><span class="fa fa-user"></span> Profile Page</h1>
+    </div>
 
     <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        <h1><span class="fa fa-folder"></span> Your Models</h1>
     </div>
 
     <div class="row">
-
+        <h1 id="accountset"><span class="fa fa-gear"></span>Account Settings</h1>
         <!-- LOCAL INFORMATION -->
-        <div class="col-sm-6">
+        <div class="col-sm-3 col-sm-offset-1">
             <div class="well">
                 <h3><span class="fa fa-user"></span> Local</h3>
-                <p>email: {{user.data.local.email}}</p>
-                <p>pass: {{user.data.local.password}}</p>
                 <a ng-if="user.data.local.email" href="/unlink/local" class="btn btn-default">Unlink</a>
                 <a ng-if="!user.data.local.email" href="/connect/local" class="btn btn-default">Connect Local</a>
 
             </div>
         </div>
-    </div>
 
-    <div class="col-sm-6">
-        <div class="well">
-            <h3 class="text-primary"><span class="fa fa-facebook"></span> Facebook</h3>
-
-            <p>
-                <strong>id</strong>: {{ user.data.facebook.id }}
-                <br>
-                <strong>token</strong>: {{ user.data.facebook.token}}
-                <br>
-                <strong>name</strong>: {{ user.data.facebook.name }}
-            </p>
-            <a ng-if="user.data.facebook.token" href="/unlink/facebook" class="btn btn-primary">Unlink</a>
-            <a ng-if="!user.data.facebook.token" href="/connect/facebook" class="btn btn-primary">Connect Facebook</a>
+        <div class="col-sm-3">
+            <div class="well">
+                <h3 class="text-primary"><span class="fa fa-facebook"></span> Facebook</h3>
+                <a ng-if="user.data.facebook.token" href="/unlink/facebook" class="btn btn-primary">Unlink</a>
+                <a ng-if="!user.data.facebook.token" href="/connect/facebook" class="btn btn-primary">Connect Facebook</a>
 
 
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="well">
+                <h3 class="text-danger"><span class="fa fa-google-plus"></span> Google</h3>
+                <a ng-if="user.data.google.token" href="/unlink/google" class="btn btn-danger">Unlink</a>
+                <a ng-if="!user.data.google.token" href="/connect/google" class="btn btn-danger">Connect Google</a>
+
+            </div>
         </div>
     </div>
 
-    <div class="col-sm-6">
-        <div class="well">
-            <h3 class="text-danger"><span class="fa fa-google-plus"></span> Google</h3>
-            <strong>id</strong>: {{ user.data.google.id }}
-            <br>
-            <strong>token</strong>: {{user.data.google.token}}
-            <br>
-            <strong>email</strong>: {{user.data.google.email}}
-            <br>
-            <strong>name</strong>: {{user.data.google.name}}
-            <a ng-if="user.data.google.token" href="/unlink/google" class="btn btn-danger">Unlink</a>
-            <a ng-if="!user.data.google.token" href="/connect/google" class="btn btn-danger">Connect Google</a>
-
-        </div>
-    </div>
 
 
 </body>

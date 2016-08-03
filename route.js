@@ -18,6 +18,9 @@ module.exports = function (app, passport, router) {
         res.sendFile(path.join(__dirname + '/public/Pages/ModelDetails.html'));
     });
 
+    app.get("/Search", function (req, res) {
+        res.sendFile(path.join(__dirname + '/public/Pages/search.html'));
+    })
 
     //Login
     app.get('/login', function (req, res) {
@@ -140,10 +143,12 @@ module.exports = function (app, passport, router) {
         var model_list = [];
 
         Model.find({}, (function (err, docs) {
-            docs.forEach(function (user) {
-                model_list.push(user);
-            })
-            res.json(model_list);
+            if (docs != undefined) {
+                docs.forEach(function (user) {
+                    model_list.push(user);
+                })
+                res.json(model_list);
+            }
         }));
     });
 
