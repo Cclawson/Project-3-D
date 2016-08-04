@@ -82,7 +82,7 @@ mongoose.connect(configDB.url);
 
 
 // set our port
-var port = process.env.PORT || 8080;
+var port = Number(process.env.PORT || 3000);
 
 router.use(function (req, res, next) {
     // do logging
