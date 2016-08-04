@@ -93,9 +93,13 @@ router.use(function (req, res, next) {
 require('./route.js')(app, passport, router);
 
 
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+})
+
 // startup our app at http://localhost:8080
-app.listen(process.env.PORT || 3000, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+app.listen(process.env.PORT || 3000, function () {
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
 
 // expose app           
