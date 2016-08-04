@@ -94,10 +94,9 @@ require('./route.js')(app, passport, router);
 
 
 // startup our app at http://localhost:8080
-app.listen(port);
-
-// shoutout to the user                     
-console.log('Server Started on port ' + port);
+app.listen(process.env.PORT || 3000, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
 
 // expose app           
 exports = module.exports = app;

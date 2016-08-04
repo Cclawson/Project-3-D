@@ -4,6 +4,9 @@
   "description": "Ecommerce Site for 3-D Models",
   "Author": "Cody Clawson",
   "main": "server.js",
+  "engines": {
+    "node": "4.2.2"
+  },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.4.2",
