@@ -8,10 +8,6 @@ module.exports = function (app, passport, router) {
         extended: false
     })
 
-app.get('/', function(req, res){
-    res.sendFile(path.join(__dirname + '/public/index.html'));
-})
-
     //Model Details
     app.get('/Model/Details/:modelId', function (req, res) {
         res.cookie('modelNumber', req.params.modelId, {
