@@ -94,7 +94,7 @@ require('./route.js')(app, passport, router);
 
 
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/public/index.html'));
+    res.sendFile(path.join(__dirname + '/public/Pages/index.html'));
 })
 
 // startup our app at http://localhost:8080
