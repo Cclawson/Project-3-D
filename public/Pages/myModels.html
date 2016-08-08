@@ -3,27 +3,54 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Project 3-D Profile</title>
+    <title>Project 3-D</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../Style/main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="/js/Controllers/ProfileCtrl.js"></script>
     <script src="/js/Apps/profileApp.js"></script>
 </head>
 
 <body ng-app="profileApp" ng-controller="ProfileController">
+    <div class="mainbg">
+        <div class="row">
+            <div class="col-xs-1">
+                <div class="sitelogo">
+                </div>
+            </div>
+            <div class="col-xs-7">
+                <nav>
+                    <ul>
+                        <li class="home"><a href="/"><i class="fa fa-home"></i></a></li>
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/search">Search</a></li>
+                        <li><a href="/profile">Profile</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
 
-    <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        <div class="page-header text-center">
+            <h1><span class="fa fa-file"></span> Your Models</h1>
+        </div>
+        <div class="text-center" ng-if="user.data.models.length === 0">you currently have no purchased models</div>
+        <div class="row">
+            <div ng-repeat="model in user.data.models" class="text-center col-md-12">
+                <a ng-click="getModel(model._id)">Download</a>
+            </div>
+        </div>
     </div>
 
-    <div>Welcome to your models site</div>
-    <div ng-repeat="model in user.data.models">
-        <a ng-click="getModel(model._id)">Download</a>
-    </div>
 
 
+    <!--SCRIPTS-->
+    <script src="/js/Libraries/three.min.js"></script>
+    <script src="/js/Libraries/OrbitControls.js"></script>
+    <script src=/js/cube.js></script>
 </body>
 
 </html>

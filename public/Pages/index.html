@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="Style/main.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="js/Controllers/MainCtrl.js"></script>
     <script src="js/homeApp.js"></script>
 </head>
@@ -35,8 +35,8 @@
         </div>
 
         <form class="search" action="">
-            <input type="search" placeholder="Search Models..." required>
-            <button type="submit">Search</button>
+            <input type="search" placeholder="Search Models..." ng-model="searchString">
+            <button type="submit" ng-click="sendSearch()">Search</button>
         </form>
 
         <img src="images/cube.png" class="svgbox">
