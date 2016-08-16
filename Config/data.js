@@ -9,36 +9,40 @@ module.exports = {
             arthur: 'Cody Clawson',
             tags: [],
             url: '/Models/Model1.json',
-            image: '/Models/images/model1.png'
+            image: '/images/models/model.png',
+            price: "1.00"
     },
         {
             Title: 'Model 2',
             arthur: 'Walter W.',
             tags: [],
             url: '/Models/Model2.json',
-            image: '/Models/images/model2.png'
-
+            image: '/images/models/model.png',
+            price: "2.00"
     },
         {
             Title: 'Rubiks Cube',
             arthur: 'Bob The Artist',
             tags: [],
             url: '/Models/Model3.json',
-            image: '/Models/images/model3.png'
+            image: '/images/models/model.png',
+            price: "3.00"
     },
         {
             Title: 'Cool Model',
             arthur: 'Joe Cool',
             tags: [],
             url: '/Models/Model2.json',
-            image: '/Models/images/model4.png'
+            image: '/images/models/model.png',
+            price: "1.50"
     },
         {
             Title: 'Blank Model',
             arthur: 'Tim Test',
             tags: [],
             url: '/Models/Model2.json',
-            image: '/Models/images/model5.png'
+            image: '/images/models/model.png',
+            price: "4.00"
     }
 ],
 };

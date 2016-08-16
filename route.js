@@ -8,7 +8,7 @@ module.exports = function (app, passport, router) {
         extended: false
     })
 
-    //Model Details
+    //Model Details ================================================
     app.get('/Model/Details/:modelId', function (req, res) {
         res.cookie('modelNumber', req.params.modelId, {
             expires: new Date(Date.now() + 3600000 * 24 * 15),
@@ -18,27 +18,30 @@ module.exports = function (app, passport, router) {
         res.sendFile(path.join(__dirname + '/public/Pages/ModelDetails.html'));
     });
 
+    //Search Page ===================================================
     app.get("/Search", function (req, res) {
         res.sendFile(path.join(__dirname + '/public/Pages/search.html'));
     })
 
-    //Login
+    //Login =========================================================
     app.get('/login', function (req, res) {
         res.sendFile(path.join(__dirname + '/public/Pages/Login.html'));
     });
 
 
-    //Signup
+    //Signup =========================================================
 
     app.get('/register', function (req, res) {
         res.sendFile(path.join(__dirname + '/public/Pages/Register.html'));
     })
 
+    //Profile ========================================================
     app.get("/profile", isLoggedIn, function (req, res) {
         res.sendFile(path.join(__dirname + '/public/Pages/Profile.html'));
         req.session.userId = Math.random(0, 100000);
     })
 
+    //My Models ======================================================
     app.get("/profile/mymodels", isLoggedIn, function (req, res) {
         if (!req.session.dwnld && req.session.userId) {
             req.session.dwnld = req.session.userId;
@@ -46,7 +49,7 @@ module.exports = function (app, passport, router) {
         res.sendFile(path.join(__dirname + '/public/Pages/myModels.html'));
     });
 
-
+    //Paypal Link ====================================================
     app.get("/paypal", isLoggedIn, function (req, res) {
         res.end();
     })
@@ -54,12 +57,13 @@ module.exports = function (app, passport, router) {
     app.post("/paypal", urlencodedParser, function (req, res) {
         var params = req.body;
         console.log(params);
-        //        ipn.verify(params, function callback(err, msg) {
-        //        if (err) {
-        //            console.log(err);
-        //            res.redirect("/");
-        //            return false
-        //        }
+        ipn.verify(params, function callback(err, msg) {
+            if (err) {
+                console.log(err);
+                res.redirect("/");
+                return false
+            }
+        });
 
         if (params.payment_status == 'Completed') {
             console.log(params.item_id);
@@ -79,6 +83,26 @@ module.exports = function (app, passport, router) {
         res.status(200);
     });
 
+    //Favorites =======================================================================
+
+    app.put("/addfavorites", urlencodedParser, function (req, res) {
+        var urlstring = req.param("url");
+        var name = req.param("name");
+        console.log(urlstring + " " + name);
+
+        if (req.user != undefined) {
+            console.log("here");
+            req.user.favorites.push({
+                Name: name,
+                urlString: urlstring
+            })
+        }
+
+        res.status(200).end();
+    })
+
+
+    //Reigistration and Login Posts ====================================================
     app.post('/register', passport.authenticate('local-signup', {
         successRedirect: '/profile', // redirect to the secure profile section
         failureRedirect: '/register', // redirect back to the signup page if there is an error
@@ -137,7 +161,7 @@ module.exports = function (app, passport, router) {
         }));
 
 
-    // api ==================================================
+    // API ==================================================
 
     router.route('/model_list').get(function (req, res) {
         var model_list = [];
@@ -288,5 +312,5 @@ function isLoggedIn(req, res, next) {
         return next();
 
     // if they aren't redirect them to the home page
-    res.redirect('/');
+    res.redirect('/login');
 }

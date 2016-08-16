@@ -5,6 +5,15 @@ angular.module('ModelDetailsCtrl', [])
     $scope.model = "";
     $scope.message = 'Welcome To Model Details Page';
 
+    $scope.user;
+
+    $http.get("/api/user")
+        .then(function (response) {
+            console.log(response);
+            $scope.user = response;
+        });
+
+
     $http.get("/api/model/" + $cookies.modelNumber)
         .then(function (response) {
             $scope.model = response.data;
@@ -24,4 +33,11 @@ angular.module('ModelDetailsCtrl', [])
             }
 
         });
+
+    $scope.addToFavorites = function () {
+        console.log(window.location.href);
+        $http.put("/addfavorites/?url=" + window.location.href + "&name=" + $scope.model.Title).then(function (response) {
+            console.log(response);
+        })
+    };
 }]);

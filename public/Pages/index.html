@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
     <script src="js/Controllers/MainCtrl.js"></script>
     <script src="js/homeApp.js"></script>
 </head>
@@ -26,7 +27,8 @@
                 <nav>
                     <ul>
                         <li class="home"><a href="/"><i class="fa fa-home"></i></a></li>
-                        <li><a href="/login">Login</a></li>
+                        <li ng-show="user.data === ''"><a href="/login">Login</a></li>
+                        <li><a href="/logout" ng-show="user.data !== ''">Logout</a></li>
                         <li><a href="/search">Search</a></li>
                         <li><a href="/profile">Profile</a></li>
                     </ul>
@@ -41,9 +43,6 @@
 
         <img src="images/cube.png" class="svgbox">
 
-
-        <!--SCRIPTS-->
-        <script src="js/nav.js"></script>
 
 </body>
 

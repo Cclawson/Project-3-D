@@ -11,11 +11,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="js/Controllers/MainCtrl.js"></script>
-    <script src="js/homeApp.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
+    <script src="js/Controllers/SearchCtrl.js"></script>
+    <script src="js/Apps/searchApp.js"></script>
 </head>
 
-<body ng-app="homeApp" ng-controller="mainController">
+<body ng-app="searchApp" ng-controller="searchController">
     <div class="mainbg">
         <div class="row">
             <div class="col-xs-1">
@@ -26,7 +27,8 @@
                 <nav>
                     <ul>
                         <li class="home"><a href="/"><i class="fa fa-home"></i></a></li>
-                        <li><a href="/login">Login</a></li>
+                        <li ng-show="user.data === ''"><a href="/login">Login</a></li>
+                        <li><a href="/logout" ng-show="user.data !== ''">Logout</a></li>
                         <li><a href="/search">Search</a></li>
                         <li><a href="/profile">Profile</a></li>
                     </ul>
@@ -57,23 +59,16 @@
 
                 </button>
                 <hr>
-                <!-- track by model._id-->
                 <div class="row" id="resultsbox">
-                    <div class="col-md-4" ng-repeat="model in model_list  | orderBy:sortType:sortReverse | filter:search  | filter:tag">
+                    <div class="col-md-4" ng-repeat="model in (filteredItems =  (model_list | orderBy:sortType:sortReverse | filter:search  | filter:tag).slice(begin, end)) | startFrom: (currentPage - 1)* pageSize | limitTo:pageSize">
                         <img src="{{model.image}}" width="80px" height="80px">
                         <p>
                             <a href="/Model/Details/{{model._id}}">{{model.Title}} </a> - {{model.arthur}}
                         </p>
                     </div>
-                    <!--
-             <li ng-repeat="model in model_list  | orderBy:sortType:sortReverse | filter:search  | filter:tag">
-    <img src="{{model.image}}" width="80px" height="80px">
-    <p>
-        <a href="/Model/Details/{{model._id}}">{{model.Title}} </a> - {{model.arthur}}
-    </p>
-</li>
--->
                 </div>
+                <pagination total-items="filteredItems.length" ng-Model="currentPage" items-per-page="pageSize">
+                </pagination>
             </div>
         </div>
     </div>
