@@ -55,32 +55,26 @@ module.exports = function (app, passport, router) {
     })
 
     app.post("/paypal", urlencodedParser, function (req, res) {
-        var params = req.body;
-        console.log(params);
+        res.send(200);
+
         ipn.verify(params, function callback(err, msg) {
             if (err) {
-                console.log(err);
-                res.redirect("/");
-                return false
+                console.error(err);
+            } else {
+                // Do stuff with original params here
+
+                if (params.payment_status == 'Completed') {
+                    // Payment has been confirmed as completed
+                }
             }
         });
 
-        if (params.payment_status == 'Completed') {
-            console.log(params.item_id);
-            console.log(params.item_Name);
-            console.log(req.user);
-
-            if (req.user != undefined) {
-                req.user.models.push({
-                    Name: params.item_Name,
-                    ID: params.item_id
-                })
-            }
-            res.redirect("/profile")
-        }
-        res.status(200).end();
-        //        });
-        res.status(200);
+        //You can also pass a settings object to the verify function:
+        ipn.verify(params, {
+            'allow_sandbox': true
+        }, function callback(err, mes) {
+            //The library will attempt to verify test payments instead of blocking them
+        });
     });
 
     //Favorites =======================================================================
