@@ -50,32 +50,14 @@ module.exports = function (app, passport, router) {
     });
 
     //Paypal Link ====================================================
-    app.get("/paypal", isLoggedIn, function (req, res) {
-        res.end();
+    app.get("/promotion", isLoggedIn, function (req, res) {
+        res.sendFile(path.join(__dirname + '/public/Pages/promotion.html'));
     })
 
-    app.post("/paypal", urlencodedParser, function (req, res) {
-        res.send(200);
-
-        ipn.verify(params, function callback(err, msg) {
-            if (err) {
-                console.error(err);
-            } else {
-                // Do stuff with original params here
-
-                if (params.payment_status == 'Completed') {
-                    // Payment has been confirmed as completed
-                }
-            }
-        });
-
-        //You can also pass a settings object to the verify function:
-        ipn.verify(params, {
-            'allow_sandbox': true
-        }, function callback(err, mes) {
-            //The library will attempt to verify test payments instead of blocking them
-        });
-    });
+    app.get("/thanks", isLoggedIn, function (req, res) {
+        console.log(req);
+        res.sendFile(path.join(__dirname + '/public/Pages/thanks.html'));
+    })
 
     //Favorites =======================================================================
 
