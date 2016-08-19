@@ -46,24 +46,39 @@
                     <h3>Price: $ {{model.price}}</h3>
                     <h3>Tags:</h3>
                     <div id="container">
-                        <ul class="tags" ng-repeat="tag in model.tags">
-                            <li class="addedTag">{{tag}}
+                        <ul class="tags">
+                            <li class="addedTag" ng-repeat="tag in model.tags">{{tag}}
                             </li>
                         </ul>
                     </div>
-                    <button class="btn btn-default" ng-click="addToFavorites()"><i class="fa fa-star"></i> Favorite</button>
-                    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                        <input type="hidden" name="cmd" value="_s-xclick">
-                        <input type="hidden" name="hosted_button_id" value="RRMMVZ2MJRTV6">
-                        <input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                        <input type="hidden" name="item_name" value="{{model.Title}}">
-                        <input type="hidden" name="amount" value="{{model.price}}">
-                        <input type="hidden" name="currency_code" value="USD">
-                        <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                    </form>
+                    <hr />
+                    <div ng-switch="user.data">
+                        <div ng-switch-when="">
+                            <a href="/login">
+                                <button class="btn btn-default">
+                                    Login to buy</button>
+                            </a>
+                        </div>
+                        <div ng-switch-default>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button class="btn btn-default" ng-click="addToFavorites()"><i class="fa fa-star"></i> Favorite</button>
+                                </div>
+                                <div class="col-md-6">
 
-
-
+                                    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                        <input type="hidden" name="cmd" value="_s-xclick">
+                                        <input type="hidden" name="hosted_button_id" value="RRMMVZ2MJRTV6">
+                                        <input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                                        <input type="hidden" name="item_name" value="{{model.Title}}">
+                                        <input type="hidden" name="item_price" value="12.99">
+                                        <input type="hidden" name="currency_code" value="USD">
+                                        <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
