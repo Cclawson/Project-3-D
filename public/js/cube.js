@@ -42,7 +42,6 @@ function init() {
     $.get(
         "/api/url/" + getCookie("modelNumber"),
         function (data) {
-            console.log(data.url);
             url = data.url;
         }
     ).then(function (url) {

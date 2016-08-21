@@ -1,6 +1,7 @@
 module.exports = function (app, passport, router) {
     var path = require("path");
     var Model = require('./Objects/model');
+    var User = require('./Objects/user');
     var ObjectId = require('mongodb').ObjectID;
     var ipn = require('paypal-ipn');
     var bodyParser = require('body-parser');
@@ -54,40 +55,87 @@ module.exports = function (app, passport, router) {
         res.sendFile(path.join(__dirname + '/public/Pages/promotion.html'));
     })
 
-    app.get("/thanks", isLoggedIn, function (req, res) {
+    app.get("/thanks", function (req, res) {
         console.log(req);
         res.sendFile(path.join(__dirname + '/public/Pages/thanks.html'));
     })
+
 
     //Favorites =======================================================================
 
     app.put("/addfavorites", urlencodedParser, function (req, res) {
         var urlstring = req.param("url");
         var name = req.param("name");
-        console.log(urlstring + " " + name);
 
-        if (req.user != undefined) {
-            console.log("here");
-            req.user.favorites.push({
-                Name: name,
-                urlString: urlstring
-            })
-        }
-
+        User.findByIdAndUpdate(req.user._id, {
+                $push: {
+                    "favorites": {
+                        Name: name,
+                        urlString: urlstring
+                    }
+                }
+            }, {
+                safe: true,
+                upsert: true,
+                new: true
+            },
+            function (err, user) {
+                console.log(err)
+                console.log(user);
+            }
+        )
         res.status(200).end();
     })
+
+    app.put("/removefavorite", urlencodedParser, function (req, res) {
+        var urlstring = req.param("url");
+
+        User.findByIdAndUpdate(req.user._id, {
+                $pull: {
+                    "favorites": {
+                        urlString: urlstring
+                    }
+                }
+            },
+            function (err, user) {
+                console.log(err)
+                console.log(user);
+            }
+        )
+        res.status(200).end();
+
+
+    })
+
+    app.put("/purchasemodel", urlencodedParser, function (req, res) {
+        var id = req.param("id");
+        var name = req.param("name");
+
+        User.findByIdAndUpdate(req.user._id, {
+                $push: {
+                    "models": {
+                        Name: name,
+                        _id: id
+                    }
+                }
+            }, {
+                safe: true,
+                upsert: true,
+                new: true
+            },
+            function (err, user) {
+                console.log(err)
+                console.log(user);
+            }
+        )
+        res.status(200).end();
+    });
 
 
     //Reigistration and Login Posts ====================================================
     app.post('/register', passport.authenticate('local-signup', {
         successRedirect: '/profile', // redirect to the secure profile section
         failureRedirect: '/register', // redirect back to the signup page if there is an error
-        failureFlash: true // allow flash messages
-    }));
-
-    app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/profile', // redirect to the secure profile section
-        failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
 

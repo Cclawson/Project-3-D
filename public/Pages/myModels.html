@@ -19,8 +19,11 @@
     <div class="mainbg">
         <div class="row">
             <div class="col-xs-1">
-                <div class="sitelogo">
-                </div>
+                <a href="/">
+                    <div class="sitelogo">
+                        <img id="logo" src="/images/CapLogo.png" width=118 height=118/>
+                    </div>
+                </a>
             </div>
             <div class="col-xs-7">
                 <nav>
@@ -40,7 +43,7 @@
         <div class="text-center" ng-if="user.data.models.length === 0">you currently have no purchased models</div>
         <div class="row">
             <div ng-repeat="model in user.data.models" class="text-center col-md-12">
-                <a ng-click="getModel(model._id)">Download</a>
+                <a ng-click="getModel(model._id)"><h2>{{model.Name}}</h2> - Download</a>
             </div>
         </div>
     </div>

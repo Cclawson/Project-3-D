@@ -20,6 +20,7 @@ angular.module('SearchCtrl', [])
     if ($cookies.searchterm != "") {
         console.log($cookies.searchterm);
         $scope.search.Title = $cookies.searchterm;
+        $cookies.searchterm = "";
     }
 
     /*TAG Filter*/

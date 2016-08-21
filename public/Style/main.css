@@ -25,6 +25,9 @@ body {
     border-radius: 100px;
     background-color: white;
     margin: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
 }
 
 .search {
@@ -103,7 +106,8 @@ body {
 
 #detailsbox {
     width: auto;
-    height: 400px;
+    min-height: 400px;
+    height: auto;
     background-color: white;
     margin: 40px;
     padding: 20px;
@@ -147,6 +151,7 @@ ul {
     border-radius: 2px;
     color: #fff;
     padding: 0.25em;
+    margin: 5px;
 }
 
 .tags input,

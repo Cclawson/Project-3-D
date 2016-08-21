@@ -97,7 +97,7 @@ mongoose.connect(configDB.url);
 var port = Number(process.env.PORT || 3000);
 
 router.use(function (req, res, next) {
-    next(); 
+    next();
 });
 
 // routes ==================================================

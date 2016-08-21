@@ -18,8 +18,11 @@
 <body ng-app="profileApp" ng-controller="ProfileController">
     <div class="row">
         <div class="col-xs-1">
-            <div class="sitelogo">
-            </div>
+            <a href="/">
+                <div class="sitelogo">
+                    <img id="logo" src="/images/CapLogo.png" width=118 height=118/>
+                </div>
+            </a>
         </div>
         <div class="col-xs-7">
             <nav>
@@ -33,17 +36,51 @@
         </div>
     </div>
     <div class="page-header text-center">
-        <h1><span class="fa fa-user"></span> Profile Page</h1>
+        <h1><span class="fa fa-user"></span> Favorites</h1>
+    </div>
+
+    <div style="text-align: left">
+        <ul>
+            <div class="row">
+                <li ng-repeat="fav in user.data.favorites">
+                    <div class="col-md-3 col-md-offset-4">
+                        <a href={{fav.urlString}}>
+                            <h4 style="color: white"><span class="fa fa-star" style="color: yellow"></span> {{fav.Name}}</h4>
+                        </a>
+                    </div>
+                    <div class="col-md-1">
+                        <a><h4 ng-click="removeFavorite(fav.urlString, fav.Name)" style="color: black"><i class="fa fa-minus-square" ></i> Remove</h4></a>
+                    </div>
+                </li>
+            </div>
+        </ul>
     </div>
 
     <div class="page-header text-center">
         <h1><span class="fa fa-folder"></span> Your Models</h1>
     </div>
+    <div style="text-align: left">
+        <ul>
+            <div class="row">
+                <li ng-repeat="model in user.data.models">
+                    <div class="col-md-3 col-md-offset-4">
 
+                        <h4 style="color: white"><span class="fa fa-cube" style="color: black"></span>{{model.Name}}</h4>
+                    </div>
+                    <div class="col-md-1">
+                        <a ng-click="getModel(model._id)">
+                            <h4 style="color: black"><i class="fa fa-file"></i> Download</h4></a>
+                    </div>
+            </div>
+        </ul>
+    </div>
+
+    <div class="page-header text-center">
+        <h1><span class="fa fa-gear"></span>Account Settings</h1>
+    </div>
     <div class="row">
-        <h1 id="accountset"><span class="fa fa-gear"></span>Account Settings</h1>
         <!-- LOCAL INFORMATION -->
-        <div class="col-sm-3 col-sm-offset-1">
+        <div class="col-sm-2 col-sm-offset-3">
             <div class="well">
                 <h3><span class="fa fa-user"></span> Local</h3>
                 <a ng-if="user.data.local.email" href="/unlink/local" class="btn btn-default">Unlink</a>
@@ -52,7 +89,7 @@
             </div>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <div class="well">
                 <h3 class="text-primary"><span class="fa fa-facebook"></span> Facebook</h3>
                 <a ng-if="user.data.facebook.token" href="/unlink/facebook" class="btn btn-primary">Unlink</a>
@@ -62,7 +99,7 @@
             </div>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <div class="well">
                 <h3 class="text-danger"><span class="fa fa-google-plus"></span> Google</h3>
                 <a ng-if="user.data.google.token" href="/unlink/google" class="btn btn-danger">Unlink</a>
