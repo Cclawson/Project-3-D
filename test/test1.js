@@ -12,7 +12,7 @@ describe('Model', function () {
         var modelTitle = "Rubiks Cube";
 
         $.get(
-            "/api/model/57768633a477ba7832d6c31e",
+            "/api/model/57ab39dd0fdfe27c28ac7a9f",
             function (data) {
                 console.log(data);
                 chai.assert.equal(data.Title, modelTitle);
@@ -26,10 +26,23 @@ describe('ModelURL', function () {
         var modelUrl = "/Models/Model3.json";
 
         $.get(
-            "/api/urlodel/57768633a477ba7832d6c31e",
+            "/api/urlodel/57ab39dd0fdfe27c28ac7a9f",
             function (data) {
                 console.log(data);
                 chai.assert.equal(data, modelUrl);
+            }
+        )
+    })
+});
+
+describe('ModelURL', function () {
+    it('user should be undefined unless logged in', function () {
+
+        $.get(
+            "/api/user",
+            function (data) {
+                console.log(data);
+                chai.assert.equal(data.data, "");
             }
         )
     })

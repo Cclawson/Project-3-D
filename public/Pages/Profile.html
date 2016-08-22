@@ -64,12 +64,10 @@
             <div class="row">
                 <li ng-repeat="model in user.data.models">
                     <div class="col-md-3 col-md-offset-4">
-
                         <h4 style="color: white"><span class="fa fa-cube" style="color: black"></span>{{model.Name}}</h4>
                     </div>
                     <div class="col-md-1">
-                        <a ng-click="getModel(model._id)">
-                            <h4 style="color: black"><i class="fa fa-file"></i> Download</h4></a>
+                        <a ng-click="getModel(model._id)"><h4 style="color: black"> - Download</h4></a>
                     </div>
             </div>
         </ul>
